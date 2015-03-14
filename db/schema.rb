@@ -16,11 +16,11 @@ ActiveRecord::Schema.define(version: 20150313144720) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "pokemons", primary_key: "pokemon_id", force: :cascade do |t|
+  create_table "pokes", primary_key: "poke_id", force: :cascade do |t|
     t.string "name", limit: 50, null: false
   end
 
-  add_index "pokemons", ["name"], name: "pokemons_name_key", unique: true, using: :btree
+  add_index "pokes", ["name"], name: "pokes_name_key", unique: true, using: :btree
 
   create_table "users", primary_key: "user_id", force: :cascade do |t|
     t.string "username", limit: 50, null: false
