@@ -11,19 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150313144720) do
+ActiveRecord::Schema.define(version: 20150318142901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "account", primary_key: "user_id", force: :cascade do |t|
+    t.string   "username",   limit: 50,  null: false
+    t.string   "password",   limit: 50,  null: false
+    t.string   "email",      limit: 355, null: false
+    t.datetime "created_on",             null: false
+    t.datetime "last_login"
+  end
+
+  add_index "account", ["email"], name: "account_email_key", unique: true, using: :btree
+  add_index "account", ["username"], name: "account_username_key", unique: true, using: :btree
 
   create_table "pokes", primary_key: "poke_id", force: :cascade do |t|
     t.string "name", limit: 50, null: false
   end
 
-  add_index "pokes", ["name"], name: "pokes_name_key", unique: true, using: :btree
+  add_index "pokes", ["name"], name: "pokemons_name_key", unique: true, using: :btree
 
   create_table "users", primary_key: "user_id", force: :cascade do |t|
-    t.string "username", limit: 50, null: false
+    t.string "username",        limit: 50,  null: false
+    t.string "password_digest", limit: 255
   end
 
   add_index "users", ["username"], name: "person_username_key", unique: true, using: :btree

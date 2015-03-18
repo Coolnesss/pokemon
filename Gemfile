@@ -53,4 +53,6 @@ group :development do
   gem 'rails_layout'
 end
 
+gem 'bcrypt'
+
 ruby '2.2.0'

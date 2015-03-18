@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
 
   root 'pokes#index'
-  get '/pokemons' => 'pokes#index'
-  get 'pokemons/:id' => 'pokes#show'
 
   resources :pokes
+  resources :users
+
+  resource :session, only: [:new, :create, :delete]
+
+  get 'signin' => 'sessions#new'
+  get 'signup' => 'users#new'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
