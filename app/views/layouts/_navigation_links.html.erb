@@ -1,2 +1,6 @@
 <%# add navigation links to this file %>
-<li class="navbar-right"><%= link_to 'Sign in', signin_path %></li>
+<% if not current_user %>
+  <li class="navbar-right"><%= link_to 'Sign in', signin_path %></li>
+<% else %>
+  <li class="navbar-right"><%= link_to current_user.username, current_user %></li>
+<% end %>
