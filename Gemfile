@@ -55,5 +55,5 @@ end
 
 gem "better_errors"
 gem 'bcrypt'
-
+gem 'pokegem'
 ruby '2.2.0'
