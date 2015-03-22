@@ -5,3 +5,10 @@ script:
 - bundle exec rake db:migrate --trace
 - RAILS_ENV=test bundle exec rake db:migrate --trace
 - bundle exec rake db:test:prepare
+deploy:
+  provider: heroku
+  api_key:
+    secure: a/QwKpibA2O3cfAB+be9pvJXs/kXRW9EZaw752e6M5fGlr9q63w/rw4scaRnDbZPpMKtAt8mo444f8M1W9obEhnW6bQT3G1+My2vmcmZyoTazhfH3eQJngTN4cnNALSFnjm0HOObj/6UoXEZuqc+E6InZTgCS0An1VTRpvIiWW8=
+  app: pokemons
+  on:
+    repo: Coolnesss/pokemon
