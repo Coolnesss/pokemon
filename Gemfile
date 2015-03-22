@@ -53,6 +53,7 @@ group :development do
   gem 'rails_layout'
 end
 
+gem "better_errors"
 gem 'bcrypt'
 
 ruby '2.2.0'

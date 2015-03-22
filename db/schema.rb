@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150318142901) do
+ActiveRecord::Schema.define(version: 20150322115234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,11 @@ ActiveRecord::Schema.define(version: 20150318142901) do
 
   add_index "pokes", ["name"], name: "pokemons_name_key", unique: true, using: :btree
 
+  create_table "user_pokes", primary_key: "user_poke_id", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "poke_id"
+  end
+
   create_table "users", primary_key: "user_id", force: :cascade do |t|
     t.string "username",        limit: 50,  null: false
     t.string "password_digest", limit: 255
@@ -40,4 +45,6 @@ ActiveRecord::Schema.define(version: 20150318142901) do
 
   add_index "users", ["username"], name: "person_username_key", unique: true, using: :btree
 
+  add_foreign_key "user_pokes", "pokes", primary_key: "poke_id", name: "user_pokes_poke_id_fkey"
+  add_foreign_key "user_pokes", "users", primary_key: "user_id", name: "user_pokes_user_id_fkey"
 end

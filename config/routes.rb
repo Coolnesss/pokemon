@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :pokes
   resources :users
+  resources :user_pokes
 
   resource :session, only: [:new, :create, :delete]
 

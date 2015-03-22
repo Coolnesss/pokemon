@@ -1,11 +1,13 @@
 class PokesController < ApplicationController
+  before_action :set_poke, only: [:show, :edit, :update, :destroy]
 
   def index
     @pokemons = Poke.sqlAll
   end
 
   def show
-    @poke = Poke.find_by_id(params[:id])
+    @user_poke = UserPoke.new
+    @user_poke.poke = @poke
   end
 
   def new
@@ -28,6 +30,9 @@ class PokesController < ApplicationController
   end
 
   private
+    def set_poke
+      @poke = Poke.find_by_id(params[:id])
+    end
 
     def poke_params
       params.require(:poke).permit(:name)

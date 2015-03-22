@@ -2,3 +2,14 @@
   <strong>Name:</strong>
   <%= @poke.name %>
 </h1>
+
+<% if current_user and not current_user.has_poke_in_list?(@poke) %>
+  <h2>Add this Pokemon to your list</h2>
+  <%= form_for(@user_poke) do |f| %>
+    <%= f.hidden_field :poke_id %>
+    <%= f.submit value:"Add", :class => "btn btn-success" %>
+  <% end %>
+<% elsif current_user %>
+  <h2>Remove this Pokemon from your list</h2>
+  <%= link_to 'Remove', @user_poke, method: 'delete', class: "btn btn-danger" %>
+<% end %>

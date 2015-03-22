@@ -1,4 +1,7 @@
 class Poke < ActiveRecord::Base
+  self.table_name = "pokes"
+
+  has_many :user_pokes
 
   validates :name,
     uniqueness: true,
