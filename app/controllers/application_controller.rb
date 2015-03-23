@@ -4,12 +4,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :current_user
+  helper_method :get_id
 
   def current_user
-    if not session[:user_id].nil?
-      then return User.find_by user_id:session[:user_id]
-    else return nil
-    end
+    return nil unless session[:user_id]
+    @user ||= User.find_by_id session[:user_id]
   end
 
+  def get_id name
+    JSON.parse(Pokegem.get("pokemon", name.downcase))['national_id']
+  end
 end

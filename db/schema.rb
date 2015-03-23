@@ -11,20 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150322115234) do
+ActiveRecord::Schema.define(version: 20150323154759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "account", primary_key: "user_id", force: :cascade do |t|
+    t.string   "username",   limit: 50,  null: false
+    t.string   "password",   limit: 50,  null: false
+    t.string   "email",      limit: 355, null: false
+    t.datetime "created_on",             null: false
+    t.datetime "last_login"
+  end
+
+  add_index "account", ["email"], name: "account_email_key", unique: true, using: :btree
+  add_index "account", ["username"], name: "account_username_key", unique: true, using: :btree
 
   create_table "pokes", primary_key: "poke_id", force: :cascade do |t|
     t.string "name", limit: 50, null: false
   end
 
-  add_index "pokes", ["name"], name: "pokemons_name_key", unique: true, using: :btree
+  add_index "pokes", ["name"], name: "pokes_name_key", unique: true, using: :btree
 
   create_table "user_pokes", primary_key: "user_poke_id", force: :cascade do |t|
     t.integer "user_id"
     t.integer "poke_id"
+    t.integer "level"
+    t.integer "ev"
   end
 
   create_table "users", primary_key: "user_id", force: :cascade do |t|
@@ -34,6 +47,5 @@ ActiveRecord::Schema.define(version: 20150322115234) do
 
   add_index "users", ["username"], name: "person_username_key", unique: true, using: :btree
 
-  add_foreign_key "user_pokes", "pokes", primary_key: "poke_id", name: "user_pokes_poke_id_fkey"
   add_foreign_key "user_pokes", "users", primary_key: "user_id", name: "user_pokes_user_id_fkey"
 end

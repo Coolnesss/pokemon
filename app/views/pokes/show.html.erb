@@ -3,7 +3,7 @@
 <div class="media">
   <div class="media-left">
     <a href="#">
-      <img src='http://pokeapi.co/media/img/<%= JSON.parse(Pokegem.get("pokemon", @poke.poke_id))['national_id'] %>.png'>
+      <img src='http://pokeapi.co/media/img/<%= @id %>.png'>
     </a>
   </div>
   <div class="media-body">
@@ -11,6 +11,9 @@
       <strong>Name:</strong>
       <%= @poke.name %>
     </h1>
+    <p>
+      <%= @description %>
+    </p>
   </div>
 </div>
 

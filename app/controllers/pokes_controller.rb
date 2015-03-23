@@ -6,8 +6,16 @@ class PokesController < ApplicationController
   end
 
   def show
-    @user_poke = UserPoke.new
-    @user_poke.poke = @poke
+    if (current_user and current_user.has_poke_in_list? @poke) then
+      @user_poke = UserPoke.find_by_poke_and_user(current_user.user_id, @poke.poke_id)
+    else
+      @user_poke = UserPoke.new
+      @user_poke.poke = @poke
+    end
+    @pokemon = JSON.parse(Pokegem.get("pokemon", @poke.name.downcase))
+    @id = @pokemon['national_id']
+    description = Pokegem.get("description", @id)
+    @description = JSON.parse(description)['description'] unless description.empty?
   end
 
   def new

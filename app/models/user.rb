@@ -10,7 +10,8 @@ class User < ActiveRecord::Base
   has_secure_password
 
   def has_poke_in_list? poke
-    not ActiveRecord::Base.connection.execute("SELECT * FROM user_pokes WHERE user_id = #{self.user_id} AND poke_id = #{poke.poke_id} ").first.nil?
+    @user_pokes ||= ActiveRecord::Base.connection.execute("SELECT * FROM user_pokes WHERE user_id = '#{self.user_id}'")
+    not @user_pokes.each{|z| if "#{poke.poke_id}" == z['poke_id'] then return true end}
   end
 
   def self.sqlAll
