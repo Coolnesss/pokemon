@@ -1,7 +1,18 @@
-<h1>
-  <strong>Name:</strong>
-  <%= @poke.name %>
-</h1>
+
+<br>
+<div class="media">
+  <div class="media-left">
+    <a href="#">
+      <img src='http://pokeapi.co/media/img/<%= JSON.parse(Pokegem.get("pokemon", @poke.poke_id))['national_id'] %>.png'>
+    </a>
+  </div>
+  <div class="media-body">
+    <h1 class="media-heading">
+      <strong>Name:</strong>
+      <%= @poke.name %>
+    </h1>
+  </div>
+</div>
 
 <% if current_user and not current_user.has_poke_in_list?(@poke) %>
   <h2>Add this Pokemon to your list</h2>

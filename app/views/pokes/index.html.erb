@@ -2,10 +2,14 @@
 
 <h1 class="text-center">Pokemon</h1>
 
-
 <ul class="list-group row">
   <% @pokemons.each do |poke| %>
-    <li class="list-group-item col-xs-2"><%= link_to poke.name, poke, class: "btn btn-default" %></li>
+    <li class="list-group-item col-xs-2" style="background-color:transparent;">
+      <%= link_to poke.name, poke, class: "btn btn-default" %>
+      <% if current_user and current_user.has_poke_in_list?(poke) %>
+        <%= link_to 'On List', current_user, class:"btn btn-xs btn-success"%>
+      <% end %>
+    </li>
   <% end %>
 </ul>
 
