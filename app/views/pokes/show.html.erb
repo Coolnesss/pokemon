@@ -3,7 +3,7 @@
 <div class="media">
   <div class="media-left">
     <a href="#">
-      <img src='http://pokeapi.co/media/img/<%= @id %>.png'>
+      <img src='http://pokeapi.co/media/img/<%= @poke.api_id %>.png'>
     </a>
   </div>
   <div class="media-body">
@@ -25,5 +25,5 @@
   <% end %>
 <% elsif current_user %>
   <h2>Remove this Pokemon from your list</h2>
-  <%= link_to 'Remove', @user_poke, method: 'delete', class: "btn btn-danger" %>
+  <%= link_to 'Remove', user_poke_path(@user_poke), method: 'delete', class: "btn btn-danger" %>
 <% end %>

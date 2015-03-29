@@ -32,8 +32,8 @@ class UserPokesController < ApplicationController
 
   private
 
-  def set_poke
-    @user_poke = UserPoke.find_by_id(params[:user_poke_id])
+  def set_user_poke
+    @user_poke = UserPoke.find_by user_poke_id:(params[:id])
   end
 
   def user_poke_params

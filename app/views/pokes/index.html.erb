@@ -4,8 +4,8 @@
 
 <ul class="list-group row">
   <% @pokemons.each do |poke| %>
-    <li class="list-group-item col-xs-2" style="background-color:transparent;">
-      <img src='http://pokeapi.co/media/img/<%= get_id(poke.name) %>.png'>
+    <li class="list-group-item col-xs-2" style="background-color:gray;">
+      <img src='http://pokeapi.co/media/img/<%= poke.api_id %>.png'>
 
       <%= link_to poke.name, poke, class: "btn btn-default" %>
       <% if current_user and current_user.has_poke_in_list?(poke) %>

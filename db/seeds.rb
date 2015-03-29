@@ -7,6 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 for i in 1..151
-  nam = JSON.parse(Pokegem.get("pokemon", i))['name']
-  if (Poke.find_by name:nam).nil? then Poke.create(name:nam) end
+  info = JSON.parse(Pokegem.get("pokemon", i))
+  name = info['name']
+  if (Poke.find_by name:nam).nil? then Poke.create(name:name, api_id:i) end
 end
