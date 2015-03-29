@@ -13,3 +13,23 @@
  *= require_tree .
  *= require_self
  */
+ .btn {
+   border-radius: 0px;
+ }
+
+ .navibar {
+   padding: 10px;
+   background: white!important;
+ }
+
+ body, p {
+   font-family: "Ubuntu", Helvetica, Arial, sans-serif!important;
+ }
+
+ td, li {
+   font-family: "Comic Sans MS", cursive, sans-serif!important;
+ }
+
+ .center {
+   text-align: center;
+ }

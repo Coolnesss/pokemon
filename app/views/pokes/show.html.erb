@@ -12,7 +12,7 @@
       <%= @poke.name %>
     </h1>
     <p>
-      <%= @description %>
+      <%= JSON.parse(Pokegem.get("description", @poke.api_id))['description'] %>
     </p>
   </div>
 </div>
