@@ -1,10 +1,22 @@
 class UserPokesController < ApplicationController
   before_action :set_user_poke, only: [:show, :edit, :update, :destroy]
-
-
-
   def new
     @user_poke = UserPoke.new
+  end
+
+  def edit
+  end
+
+  def update
+    respond_to do |format|
+      if @user_poke.update(user_poke_params)
+        format.html { redirect_to @user_poke.poke, notice: 'Pokemon was successfully updated.' }
+        format.json { render :show, status: :ok, location: @user_poke.poke }
+      else
+        format.html { render :edit }
+        format.json { render json: @user_poke.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def create
@@ -37,7 +49,7 @@ class UserPokesController < ApplicationController
   end
 
   def user_poke_params
-    params.require(:user_poke).permit(:user_id, :poke_id)
+    params.require(:user_poke).permit(:user_id, :poke_id, :ev, :level)
   end
 
 end

@@ -1,0 +1,24 @@
+<h2> Edit Pokemon stats: </h2>
+
+<%= form_for(@user_poke) do |f| %>
+
+<% if @user_poke.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@user_poke.errors.count, "error") %> prohibited this Pokemon from being saved:</h2>
+
+  <ul>
+    <% @user_poke.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+
+  <div class="input-group">
+    <%= f.number_field :ev, :class => "form-control", :placeholder => "EV value" %>
+    <%= f.number_field :level, :class => "form-control", :placeholder => "Level" %>
+    <%= f.submit 'Modify', :class => "btn btn-default" %>
+  </div>
+
+<% end %>

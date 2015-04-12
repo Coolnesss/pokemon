@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root 'pokes#index'
 
-  resources :pokes
+  resources :pokes, except: [:new, :create]
   resources :users
   resources :user_pokes
 

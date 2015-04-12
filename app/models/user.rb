@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
 
   has_many :user_pokes
 
-
   validates :username, uniqueness: true,
   length: { minimum: 3 }
 
@@ -20,7 +19,6 @@ class User < ActiveRecord::Base
 
   def self.find_by_username username
     ActiveRecord::Base.connection.execute("SELECT * FROM users WHERE username = '#{username}'").first
-    #User.sqlAll.each{|z| z['username'] == username }.first
   end
 
   def self.find_by_id(id)
