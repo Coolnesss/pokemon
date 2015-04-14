@@ -10,7 +10,7 @@ class UserPokesController < ApplicationController
   def update
     respond_to do |format|
       if @user_poke.update(user_poke_params)
-        format.html { redirect_to @user_poke.poke, notice: 'Pokemon was successfully updated.' }
+        format.html { redirect_to @user_poke.user, notice: 'Pokemon was successfully updated.' }
         format.json { render :show, status: :ok, location: @user_poke.poke }
       else
         format.html { render :edit }
@@ -26,7 +26,7 @@ class UserPokesController < ApplicationController
       if @user_poke.save
         format.html { redirect_to @user_poke.user, notice:
           "Success" }
-          format.json { render :show, status: :created, location: @user_poke }
+          format.json { render :show, status: :created, location: @user_poke.user }
         else
           format.html { render :new }
           format.json { render json: @user_poke.errors, status: :unprocessable_entity }

@@ -1,6 +1,8 @@
 class UserPoke < ActiveRecord::Base
   self.table_name = "user_pokes"
 
+  before_validation :default_values
+
   belongs_to :user
   belongs_to :poke
 
@@ -10,6 +12,11 @@ class UserPoke < ActiveRecord::Base
   validates :level, numericality: { greater_than_or_equal_to: 1,
     less_than_or_equal_to: 100,
     only_integer: true }
+
+    def default_values
+      self.ev = 1 if self.ev.nil?
+      self.level = 1 if self.level.nil?
+    end
 
   def self.validate?(params)
     if (params["ev"].to_i < 0 or params["ev"].to_i > 510) then return false end
