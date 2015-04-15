@@ -12,11 +12,6 @@ class PokesController < ApplicationController
       @user_poke = UserPoke.new
       @user_poke.poke = @poke
     end
-    #ota pois nää ku muistat jos mikää ei hajonnu
-    #@pokemon = JSON.parse(Pokegem.get("pokemon", @poke.name.downcase))
-    #@id = @pokemon['national_id']
-    #description = Pokegem.get("description", @id)
-    #@description = JSON.parse(description)['description'] unless description.empty?
   end
 
   def new

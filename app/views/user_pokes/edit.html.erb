@@ -1,2 +1,7 @@
 <h1> Editing my <%= @user_poke.poke.name %> </h1>
+<h3 style="color: red;">
+  <% if @error %>
+    <%= @error %>
+  <% end %>
+</h3>
 <%= render 'edit' %>

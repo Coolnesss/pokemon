@@ -9,10 +9,12 @@ class UserPokesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @user_poke.update(user_poke_params)
+      if UserPoke.validate?(user_poke_params)
+        @user_poke.updateSql(user_poke_params)
         format.html { redirect_to @user_poke.user, notice: 'Pokemon was successfully updated.' }
         format.json { render :show, status: :ok, location: @user_poke.poke }
       else
+        @error = 'Annoit virheellisiä arvoja.';
         format.html { render :edit }
         format.json { render json: @user_poke.errors, status: :unprocessable_entity }
       end
@@ -20,24 +22,17 @@ class UserPokesController < ApplicationController
   end
 
   def create
-    @user_poke = UserPoke.new(user_poke_params)
     respond_to do |format|
-      current_user.user_pokes << @user_poke
-      if @user_poke.save
-        format.html { redirect_to @user_poke.user, notice:
-          "Success" }
-          format.json { render :show, status: :created, location: @user_poke.user }
-        else
-          format.html { render :new }
-          format.json { render json: @user_poke.errors, status: :unprocessable_entity }
-        end
-      end
+        UserPoke.createSql(current_user.user_id, user_poke_params["poke_id"])
+        format.html { redirect_to current_user, notice: "Success" }
+        format.json { render :show, status: :created, location: @user_poke.user }
     end
+  end
 
     def destroy
-      @user_poke.destroy
+      UserPoke.destroySql(params[:id])
       respond_to do |format|
-        format.html { redirect_to current_user, notice: "Pokemon removed from list" }
+        format.html { redirect_to current_user, notice: "Pokemon removed from watchlist" }
         format.json { head :no_content }
       end
     end

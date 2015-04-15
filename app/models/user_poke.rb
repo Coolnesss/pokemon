@@ -24,6 +24,14 @@ class UserPoke < ActiveRecord::Base
     return true
   end
 
+  def self.createSql(user_id, poke_id)
+    ActiveRecord::Base.connection.execute("INSERT INTO user_pokes (user_id, poke_id) VALUES (#{user_id},#{poke_id})")
+  end
+
+  def updateSql(params)
+    ActiveRecord::Base.connection.execute("UPDATE user_pokes SET ev = #{params["ev"]}, level = #{params["level"]}  WHERE user_poke_id = #{self.user_poke_id}")
+  end
+
   def self.find_by_poke_and_user user_id, poke_id
     ActiveRecord::Base.connection.execute("SELECT * FROM user_pokes WHERE user_id=#{user_id} AND poke_id=#{poke_id}").first['user_poke_id']
   end
@@ -32,8 +40,8 @@ class UserPoke < ActiveRecord::Base
     Poke.find_by_sql("SELECT * FROM user_pokes WHERE user_poke_id = '#{id}'").first
   end
 
-  def self.destroy(id)
-    Poke.find_by_sql("")
+  def self.destroySql(id)
+    Poke.find_by_sql("DELETE FROM user_pokes WHERE user_poke_id=#{id}")
   end
 
 end
