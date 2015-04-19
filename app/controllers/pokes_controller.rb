@@ -1,5 +1,6 @@
 class PokesController < ApplicationController
   before_action :set_poke, only: [:show, :edit, :update, :destroy]
+  before_action :check_if_admin, only: [:update, :destroy]
 
   def index
     @pokemons = Poke.sqlAll
@@ -41,4 +42,7 @@ class PokesController < ApplicationController
       params.require(:poke).permit(:name)
     end
 
+    def check_if_admin
+      current_user && current_user.admin?
+    end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150329120341) do
+ActiveRecord::Schema.define(version: 20150419104856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,8 +42,9 @@ ActiveRecord::Schema.define(version: 20150329120341) do
   end
 
   create_table "users", primary_key: "user_id", force: :cascade do |t|
-    t.string "username",        limit: 50,  null: false
-    t.string "password_digest", limit: 255
+    t.string  "username",        limit: 50,                  null: false
+    t.string  "password_digest", limit: 255
+    t.boolean "admin",                       default: false
   end
 
   add_index "users", ["username"], name: "person_username_key", unique: true, using: :btree

@@ -1,5 +1,7 @@
 class UserPokesController < ApplicationController
   before_action :set_user_poke, only: [:show, :edit, :update, :destroy]
+  #before_action :check_belongs_to_user, only: [:update, :destroy]
+
   def new
     @user_poke = UserPoke.new
   end
@@ -30,8 +32,8 @@ class UserPokesController < ApplicationController
   end
 
     def destroy
-      UserPoke.destroySql(params[:id])
       respond_to do |format|
+        UserPoke.destroySql(params[:id])
         format.html { redirect_to current_user, notice: "Pokemon removed from watchlist" }
         format.json { head :no_content }
       end

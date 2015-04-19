@@ -37,7 +37,7 @@ class UserPoke < ActiveRecord::Base
   end
 
   def self.find_by_id(id)
-    Poke.find_by_sql("SELECT * FROM user_pokes WHERE user_poke_id = '#{id}'").first
+    UserPoke.find_by_sql ["SELECT * FROM user_pokes WHERE user_poke_id = ?", id]
   end
 
   def self.destroySql(id)
