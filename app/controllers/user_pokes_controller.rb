@@ -1,6 +1,5 @@
 class UserPokesController < ApplicationController
   before_action :set_user_poke, only: [:show, :edit, :update, :destroy]
-  #before_action :check_belongs_to_user, only: [:update, :destroy]
 
   def new
     @user_poke = UserPoke.new

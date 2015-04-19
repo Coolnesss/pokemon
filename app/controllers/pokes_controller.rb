@@ -15,6 +15,11 @@ class PokesController < ApplicationController
     end
   end
 
+  def search
+    if params[:search].nil? then @pokes = Poke.sqlAll
+    else @pokes = Poke.search params[:search] end
+  end
+
   def new
     @poke = Poke.new
   end

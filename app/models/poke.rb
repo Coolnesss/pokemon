@@ -7,6 +7,9 @@ class Poke < ActiveRecord::Base
     uniqueness: true,
     length: { in: 3..11 } #Longest Pokemon name is Fletchinder
 
+  def self.search(search)
+    Poke.find_by_sql ["SELECT * FROM pokes WHERE name ~* ?", search]
+  end
 
   def validate(name)
     Pokegem.get("pokemon", name).empty?

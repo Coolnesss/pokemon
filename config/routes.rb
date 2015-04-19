@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get 'signin' => 'sessions#new'
   get 'signup' => 'users#new'
   get 'signout' => 'sessions#destroy'
+  get 'search' => 'pokes#search'
+  post 'search' => 'pokes#search'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

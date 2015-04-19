@@ -1,0 +1,27 @@
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1>Find a pokemon!</h1>
+
+    <%= form_tag :controller => 'pokes', :action => 'search', :method => 'get' do %>
+        <%= text_field_tag :search, params[:search], :id => 'search_field' %>
+        <%= submit_tag "Search", :name => nil %>
+      <% end %>
+      <p>
+        <span class="badge"><%= pluralize(@pokes.count, "result") %></span>
+      </p>
+  </div>
+ </div>
+
+ <ul class="list-group row">
+   <% @pokes.each do |poke| %>
+   <li class="list-group-item col-xs-2" style="background-color:transparent;">
+     <img src='http://pokeapi.co/media/img/<%= poke.api_id %>.png'>
+
+     <%= link_to poke.name, poke, class: "btn btn-default" %>
+     <% if current_user and current_user.has_poke_in_list?(poke) %>
+     <%= link_to 'On List', current_user, class:"btn btn-xs btn-success"%>
+     <% end %>
+   </li>
+   <% end %>
+ </ul>
