@@ -20,14 +20,14 @@ class Poke < ActiveRecord::Base
   end
 
   def self.createPokemon(name)
-    ActiveRecord::Base.connection.execute("INSERT INTO pokes (name) VALUES ('#{name}')")
+    Poke.find_by_sql ["INSERT INTO pokes (name) VALUES pokes ?", name]
   end
 
   def self.find_by_name(name)
-    Poke.find_by_sql("SELECT * FROM pokes WHERE name = '#{name}'").first
+    Poke.find_by_sql ["SELECT * FROM pokes WHERE name = ?", name]
   end
 
   def self.find_by_id(id)
-    Poke.find_by_sql("SELECT * FROM pokes WHERE poke_id = '#{id}'").first
+    Poke.find_by_sql ["SELECT * FROM pokes WHERE poke_id = ?", id]
   end
 end

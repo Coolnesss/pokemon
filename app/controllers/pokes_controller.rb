@@ -8,7 +8,7 @@ class PokesController < ApplicationController
 
   def show
     if (current_user and current_user.has_poke_in_list? @poke) then
-      @user_poke = UserPoke.find(UserPoke.find_by_poke_and_user(current_user.user_id, @poke.poke_id))
+      @user_poke = UserPoke.find_by_poke_and_user(current_user.user_id, @poke.poke_id)
     else
       @user_poke = UserPoke.new
       @user_poke.poke = @poke
@@ -40,7 +40,7 @@ class PokesController < ApplicationController
 
   private
     def set_poke
-      @poke = Poke.find_by_id(params[:id])
+      @poke = Poke.find_by_id(params[:id]).first
     end
 
     def poke_params

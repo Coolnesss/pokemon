@@ -9,8 +9,12 @@ class User < ActiveRecord::Base
   has_secure_password
 
   def has_poke_in_list? poke
-    @user_pokes ||= ActiveRecord::Base.connection.execute("SELECT * FROM user_pokes WHERE user_id = '#{self.user_id}'")
-    not @user_pokes.each{|z| if "#{poke.poke_id}" == z['poke_id'] then return true end}
+    @user_pokes ||= User.find_user_pokes(self.id)
+    not UserPoke.find_by_sql(["SELECT * FROM user_pokes where user_id = ? AND poke_id = ?", self.id, poke.id]).empty?
+  end
+
+  def self.find_user_pokes(user_id)
+    UserPoke.find_by_sql ["SELECT * FROM user_pokes WHERE user_id = ?", user_id]
   end
 
   def self.sqlAll
@@ -18,10 +22,10 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_username username
-    ActiveRecord::Base.connection.execute("SELECT * FROM users WHERE username = '#{username}'").first
+    User.find_by_sql(["SELECT * FROM users WHERE username = ?", username]).first
   end
 
   def self.find_by_id(id)
-    User.find_by_sql("SELECT * FROM users WHERE user_id = '#{id}'").first
+    User.find_by_sql(["SELECT * FROM users WHERE user_id = ?", id]).first
   end
 end
