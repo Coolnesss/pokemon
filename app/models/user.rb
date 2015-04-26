@@ -6,7 +6,14 @@ class User < ActiveRecord::Base
   validates :username, uniqueness: true,
   length: { minimum: 3 }
 
-  has_secure_password
+  def self.validate?(params)
+    params["username"].length > 3 and params["password"] == params["password_confirmation"]
+  end
+
+  def self.authenticate(username, password)
+    user = User.find_by_username(username)
+    user && user.password == BCrypt::Engine.hash_secret(password, user.password_salt)
+  end
 
   def has_poke_in_list? poke
     @user_pokes ||= User.find_user_pokes(self.id)
@@ -27,5 +34,18 @@ class User < ActiveRecord::Base
 
   def self.find_by_id(id)
     User.find_by_sql(["SELECT * FROM users WHERE user_id = ?", id]).first
+  end
+
+  def destroySql
+    UserPoke.find_by_sql(["DELETE FROM user_pokes WHERE user_id = ?", self.id])
+    User.find_by_sql(["DELETE FROM users WHERE user_id = ?", self.id])
+  end
+
+  def self.createSql(params, password, password_salt)
+    User.find_by_sql(["INSERT INTO users (username, password, password_salt) VALUES (?, ?, ?)", params["username"], password, password_salt])
+  end
+
+  def updateSql(params)
+    User.find_by_sql(["UPDATE users SET password = ?, password_confirmation = ? WHERE user_id = ?", params["password"], params["password_confirmation"], self.id])
   end
 end

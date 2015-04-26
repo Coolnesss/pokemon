@@ -25,12 +25,12 @@ class UserPoke < ActiveRecord::Base
   end
 
   def self.createSql(user_id, poke_id)
-    ActiveRecord::Base.connection.execute("INSERT INTO user_pokes (user_id, poke_id) VALUES (#{user_id},#{poke_id})")
+    UserPoke.find_by_sql(["INSERT INTO user_pokes (user_id, poke_id) VALUES (?, ?)", user_id, poke_id])
   end
 
   def updateSql(params)
-    UserPoke.find_by_sql(["UPDATE user_pokes SET ev = ?, level = ?", params["ev"], params["level"]])
-    #ActiveRecord::Base.connection.execute("UPDATE user_pokes SET ev = #{params["ev"]}, level = #{params["level"]}  WHERE user_poke_id = #{self.user_poke_id}")
+    UserPoke.find_by_sql(["UPDATE user_pokes SET ev = ?, level = ? WHERE user_poke_id = ?", params["ev"], params["level"], self.id])
+    return
   end
 
   def self.find_by_poke_and_user user_id, poke_id

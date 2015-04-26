@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
+  require 'bcrypt'
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
 
   def index
   end
@@ -9,11 +9,22 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def edit
+  end
+
+  def update
+
+  end
+
   def create
-    @user = User.new(user_params)
+    #@user = User.new(user_params)
 
     respond_to do |format|
-      if @user.save
+      if User.validate?(user_params)
+        password_salt = BCrypt::Engine.generate_salt
+        password = BCrypt::Engine.hash_secret(user_params["password"], password_salt)
+        User.createSql(user_params, password, password_salt)
+        @user = User.find_by_username(user_params[:username])
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render action: 'show', status: :created, location: @user }
       else

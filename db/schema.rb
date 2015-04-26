@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150419104856) do
+ActiveRecord::Schema.define(version: 20150422090408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 20150419104856) do
     t.string  "username",        limit: 50,                  null: false
     t.string  "password_digest", limit: 255
     t.boolean "admin",                       default: false
+    t.string  "password",        limit: 64
+    t.string  "password_salt",   limit: 64
   end
 
   add_index "users", ["username"], name: "person_username_key", unique: true, using: :btree
