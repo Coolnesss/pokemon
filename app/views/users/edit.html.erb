@@ -1,5 +1,6 @@
 <h1>Editing my profile</h1>
-
+<br>
+<h2>Change password</h2>
 <%= form_for(@user) do |f| %>
 <% if @user.new_record? %>
   <div class="field">
@@ -18,6 +19,8 @@
   <%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation  %>
 </div>
+
+<%= f.hidden_field :username %>
 
 <div class="actions">
   <%= f.submit %>

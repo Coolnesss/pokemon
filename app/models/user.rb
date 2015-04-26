@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
     User.find_by_sql(["INSERT INTO users (username, password, password_salt) VALUES (?, ?, ?)", params["username"], password, password_salt])
   end
 
-  def updateSql(params)
-    User.find_by_sql(["UPDATE users SET password = ?, password_confirmation = ? WHERE user_id = ?", params["password"], params["password_confirmation"], self.id])
+  def updateSql(password, password_salt)
+    User.find_by_sql(["UPDATE users SET password = ?, password_salt = ? WHERE user_id = ?", password, password_salt, self.id])
   end
 end

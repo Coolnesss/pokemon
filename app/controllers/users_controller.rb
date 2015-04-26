@@ -13,25 +13,30 @@ class UsersController < ApplicationController
   end
 
   def update
-
+    if User.validate?(user_params)
+      password_salt = BCrypt::Engine.generate_salt
+      password = BCrypt::Engine.hash_secret(user_params["password"], password_salt)
+      @user.updateSql(password, password_salt)
+      redirect_to @user, notice: "User was successfully updated"
+    else
+      redirect_to :back, notice: "Passwords don't match"
+    end
   end
 
   def create
-    #@user = User.new(user_params)
-
-    respond_to do |format|
       if User.validate?(user_params)
+        if not User.find_by_username(user_params["username"]).nil?
+          redirect_to :back, notice: "Username taken, pick a new one"
+          return
+        end
         password_salt = BCrypt::Engine.generate_salt
         password = BCrypt::Engine.hash_secret(user_params["password"], password_salt)
         User.createSql(user_params, password, password_salt)
-        @user = User.find_by_username(user_params[:username])
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @user }
+        @user = User.find_by_username!(user_params[:username])
+        redirect_to @user, notice: 'User was successfully created.'
       else
-        format.html { render action: 'new' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        redirect_to :back, notice: "Too short username or password mismatch"
       end
-    end
   end
 
   def show
