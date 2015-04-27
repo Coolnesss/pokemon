@@ -17,19 +17,47 @@
       <p>
         <%= JSON.parse(Pokegem.get("description", @poke.api_id))['description'] %>
       </p>
+      <strong>Abilities</strong>
+      <% JSON.parse(Pokegem.get("pokemon", @poke.name.downcase))["abilities"].each do |ab| %>
+        <span class="label label-info"><%= ab["name"] %></span>
+      <% end %>
+      <br>
+      <% if current_user and current_user.has_poke_in_list?(@poke) %>
+        <strong>My <%= @poke.name %>'s stats </strong>
+        <br>
+        Effort Value: <span class="label label-success"><% if @user_poke.ev? %>
+          <%= @user_poke.ev %></span>
+          <% else %>
+            Not set</span>
+          <% end %>
+
+        Level:   <span class="label label-success"><% if @user_poke.level? %>
+            <%= @user_poke.level %></span>
+           <% else %>
+            Not set</span>
+           <% end %>
+      <% end %>
     <% end %>
   </div>
 </div>
 
-<% if current_user and not current_user.has_poke_in_list?(@poke) %>
-  <h2>Add this Pokemon to your list</h2>
-  <%= form_for(@user_poke) do |f| %>
-    <%= f.hidden_field :poke_id %>
-    <%= f.submit value:"Add", :class => "btn btn-success" %>
+  <% if current_user and not current_user.has_poke_in_list?(@poke) %>
+    <%= form_for(@user_poke) do |f| %>
+      <%= f.hidden_field :poke_id %>
+      <%= f.submit value:"Add to List", :class => "btn btn-success" %>
+    <% end %>
+  <% elsif current_user %>
+    <%= link_to 'Remove', user_poke_path(@user_poke), method: 'delete', class: "btn btn-danger" %>
+    <%= link_to 'Edit', edit_user_poke_path(@user_poke), class: "btn btn-warning" %>
   <% end %>
-<% elsif current_user %>
-  <h2>Remove or Edit your Pokemon</h2>
-  <%= link_to 'Remove', user_poke_path(@user_poke), method: 'delete', class: "btn btn-danger" %>
-  <%= link_to 'Edit', edit_user_poke_path(@user_poke), class: "btn btn-warning" %>
-  <%= render 'stats' %>
+
+<br>
+<h2 class="text-center">Move Pool </h2>
+<% JSON.parse(Pokegem.get("pokemon", @poke.name.downcase))["moves"].each do |mv| %>
+  <div class="panel panel-default col-xs-2">
+    <div class="panel-body">
+      <strong><%= mv["name"] %></strong>
+      <span class="label label-primary"><%= mv["learn_type"] %></span>
+    </div>
+  </div>
 <% end %>
