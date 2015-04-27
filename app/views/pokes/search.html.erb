@@ -1,17 +1,20 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <h1>Find a pokemon!</h1>
+    <h1>Find a pokemon!
+      <span class="badge"><%= pluralize(@pokes.count, "result") %></span>
+    </h1>
 
-    <%= form_tag :controller => 'pokes', :action => 'search', :method => 'get' do %>
-        <%= text_field_tag :search, params[:search], :id => 'search_field' %>
-        <%= submit_tag "Search", :name => nil %>
+    <div class="input-group">
+      <%= form_tag :controller => 'pokes', :action => 'search', :method => 'get' do %>
+        <div class="form-group">
+            <%= text_field_tag :search, params[:search], :id => 'search_field', class: "form-control", placeholder: "Search" %>
+            <%= submit_tag "Go", :name => nil, :class => "btn btn-default" %>
+        </div>
       <% end %>
-      <p>
-        <span class="badge"><%= pluralize(@pokes.count, "result") %></span>
-      </p>
+    </div>
   </div>
- </div>
+</div>
 
  <ul class="list-group row">
    <% @pokes.each do |poke| %>

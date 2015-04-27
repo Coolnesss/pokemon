@@ -19,6 +19,7 @@ class UserPoke < ActiveRecord::Base
     end
 
   def self.validate?(params)
+    if (params["ev"].empty? or params["level"].empty?) then return false end
     if (params["ev"].to_i < 0 or params["ev"].to_i > 510) then return false end
     if (params["level"].to_i < 1 or params["level"].to_i > 100) then return false end
     return true

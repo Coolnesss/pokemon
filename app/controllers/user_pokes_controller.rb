@@ -16,7 +16,7 @@ class UserPokesController < ApplicationController
         format.json { render :show, status: :ok, location: @user_poke.poke }
       else
         @error = 'Annoit virheellisiä arvoja.';
-        format.html { render :edit }
+        format.html { render :edit, notice: "Annoit virheellisiä arvoja" }
         format.json { render json: @user_poke.errors, status: :unprocessable_entity }
       end
     end
