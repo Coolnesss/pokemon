@@ -7,6 +7,7 @@ class PokesController < ApplicationController
   end
 
   def show
+    @evolutions = JSON.parse(Pokegem.get("pokemon", @poke.name.downcase))["evolutions"]
     @types = JSON.parse(Pokegem.get("pokemon", @poke.name.downcase))["types"]
     if (current_user and current_user.has_poke_in_list? @poke) then
       @user_poke = UserPoke.find_by_poke_and_user(current_user.user_id, @poke.poke_id)

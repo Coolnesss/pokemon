@@ -24,7 +24,7 @@ class Poke < ActiveRecord::Base
   end
 
   def self.find_by_name(name)
-    Poke.find_by_sql ["SELECT * FROM pokes WHERE name = ?", name]
+    Poke.find_by_sql(["SELECT * FROM pokes WHERE name = ?", name]).first
   end
 
   def self.find_by_id(id)

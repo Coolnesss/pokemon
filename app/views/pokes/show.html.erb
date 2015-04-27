@@ -51,6 +51,18 @@
     <%= link_to 'Edit', edit_user_poke_path(@user_poke), class: "btn btn-warning" %>
   <% end %>
 
+  <% @evolutions.each do |evo| %>
+    <h4><strong><%= @poke.name %> can evolve to
+      <% if not Poke.find_by_name(evo["to"]).nil? %>
+        <%= link_to evo["to"], Poke.find_by_name(evo["to"]), class: "btn btn-primary" %>
+      <% else %>
+        <%= evo["to"] %>
+      <% end %>
+    <% if evo.has_key?("level") %>at level <span class="label label-success"><%= evo["level"] %></span><% end %>
+    </strong></h4>
+  <% end %>
+
+
 <br>
 <h2 class="text-center">Move Pool </h2>
 <% JSON.parse(Pokegem.get("pokemon", @poke.name.downcase))["moves"].each do |mv| %>
