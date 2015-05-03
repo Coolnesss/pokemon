@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     return nil unless session[:user_id]
-    @user ||= User.find_by_id session[:user_id]
+    User.find_by_id session[:user_id]
   end
 
   def get_id name

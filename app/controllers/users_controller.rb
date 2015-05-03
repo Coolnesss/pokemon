@@ -1,8 +1,10 @@
 class UsersController < ApplicationController
   require 'bcrypt'
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :check_if_current_user, only: [:edit, :destroy]
 
   def index
+    @users = User.sqlAll
   end
 
   def new
@@ -33,6 +35,7 @@ class UsersController < ApplicationController
         password = BCrypt::Engine.hash_secret(user_params["password"], password_salt)
         User.createSql(user_params, password, password_salt)
         @user = User.find_by_username!(user_params[:username])
+        session[:user_id] = @user.id
         redirect_to @user, notice: 'User was successfully created.'
       else
         redirect_to :back, notice: "Too short username or password mismatch"
@@ -43,6 +46,11 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def check_if_current_user
+    redirect_to :back, notice: "You can't modify other users" unless (current_user and session[:user_id] == params[:id].to_i)
+  end
+
   def set_user
     @user = User.find_by_id(params[:id])
   end
