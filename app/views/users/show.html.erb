@@ -1,5 +1,8 @@
 <h1 class="text-center"> User: <%= @user.username %>
-  <%= link_to "Edit", edit_user_path(@user), :class => "btn btn-warning" %>
+  <% if current_user and (current_user == @user or current_user.admin) %>
+    <%= link_to "Edit", edit_user_path(@user), class: "btn btn-warning" %>
+    <%= link_to 'Destroy', user_path(@user), class: "btn btn-danger", method: "delete", confirm: "Are you sure?" %>
+  <% end %>
 </h1>
 <h3 class="text-center"> My Pokemon: </h3>
 

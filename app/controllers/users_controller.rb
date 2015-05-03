@@ -7,6 +7,12 @@ class UsersController < ApplicationController
     @users = User.sqlAll
   end
 
+  def destroy
+    session[:user_id] = nil
+    redirect_to users_path, notice: "User destroyed"
+    @user.destroySql
+  end
+
   def new
     @user = User.new
   end
@@ -43,6 +49,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    redirect_to root_path unless not @user.nil?
   end
 
   private
